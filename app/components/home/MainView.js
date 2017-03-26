@@ -132,13 +132,11 @@ export default class MainView extends Component{
     const {MainViewReducer} = this.props;
     console.log('~~~~MainView  render~~~~~~',MainViewReducer);
 
+    //banner
+    this.bannerList = MainViewReducer.homeAdvPicsList;
     //最新、最热数据
-    let listArr = []; 
-    if(typeof MainViewReducer !== 'undefined'){
-        console.log('--panduan----',MainViewReducer.feedList)
-        listArr = MainViewReducer.feedList;
-        this.bannerList = MainViewReducer.homeAdvPicsList;
-    }
+    let listArr = MainViewReducer.feedList;
+    
     let dataSource = {};
     let sectionIDs = [];
     let rowIDs = []; 
