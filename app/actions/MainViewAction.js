@@ -4,10 +4,11 @@
 
 import * as types from './ActionType';
 import Util from '../common/NetUtil';
-import Common from '../common/constants';
+import Constants from '../common/constants';
 
+// 请求主页数据
 export let mainViewAction = (isRefreshing,isLoading) => {
-    let url = 'http://appapi.miidol.com:85/api.php?m=videos&c=index&a=homeData';
+    let url = Constants.urlSet.main;
     // console.log('~~~~~~~~'+url)
     return dispatch => {
 
@@ -20,7 +21,7 @@ export let mainViewAction = (isRefreshing,isLoading) => {
             dispatch(receiveMainList(homeAdvPicsList,feedList,false,false));
 
         }, (error) => {
-            console.log('加载首页数据error==>' + error);
+            console.log('请求首页数据error==>' + error);
             // debugger
             dispatch(receiveMainList([],[],false,false));
         });
@@ -45,3 +46,41 @@ let receiveMainList = (homeAdvPicsList,feedList,isRefreshing,isLoading) => {
     }
 }
 
+// 请求明星列表数据
+export let starSubjectAction = (isRefreshing,isLoading) => {
+    let url = Constants.urlSet.starList;
+    // console.log('~~~~~~~~'+url)
+    return dispatch => {
+
+        dispatch(fetchMainList(isRefreshing,isLoading));
+
+        return Util.get(url, {},(jsonData) => {    
+            console.log('请求明星列表数据')
+            let starList = jsonData.data;
+            dispatch(receiveStarSubjectList(starList,false,false));
+
+        }, (error) => {
+            console.log('请求明星列表数据error==>' + error);
+            // debugger
+            dispatch(receiveStarSubjectList([],false,false));
+        });
+    }
+}
+
+let fetchStarSubjectList = (isRefreshing,isLoading) => {
+    return {
+        type: types.FETCH_STAR_LIST,
+        isRefreshing: isRefreshing,
+        isLoading: isLoading
+    }
+}
+
+let receiveStarSubjectList = (starList,isRefreshing,isLoading) => {
+    
+    return {
+        type: types.RECEIVE_STAR_LIST,
+        starList:starList,
+        isRefreshing: isRefreshing,
+        isLoading:isLoading
+    }
+}

@@ -25,6 +25,7 @@ import {mainViewAction} from '../../actions/MainViewAction';
 
 import VideoListDetail from './VideoListDetail'
 import StarSubjectGrid from './StarSubjectGrid'
+import StarSubjectContainer from '../../containers/StarSubjectContainer'
 
 
 // const urlStr = 'http://appapi.miidol.com:85/api.php?m=videos&c=index&a=homeData'
@@ -292,10 +293,10 @@ export default class MainView extends Component{
   //明星专区
   starSubject(){
       console.log('明星专题');
-      let {navigator} = this.props;
+      let {navigator,MainViewReducer,dispatch} = this.props;
       navigator.push({
         title: '明星专区',
-        component: StarSubjectGrid,
+        component: StarSubjectContainer
       })
   }
 

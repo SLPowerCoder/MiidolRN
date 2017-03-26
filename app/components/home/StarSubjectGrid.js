@@ -16,6 +16,7 @@ import {
 
 import Constants from '../../common/constants'
 import NetUtil from '../../common/NetUtil'
+import {starSubjectAction} from '../../actions/MainViewAction';
 
 export default class StarSubjectGrid extends Component{
 
@@ -32,7 +33,9 @@ export default class StarSubjectGrid extends Component{
     console.log('componentDidMount')
         //数据请求
         InteractionManager.runAfterInteractions(() => {
-            this.getNetData();
+            // this.getNetData();
+            let {dispatch} = this.props;
+            dispatch(starSubjectAction(false,true));
         });
   }
 
@@ -79,13 +82,18 @@ export default class StarSubjectGrid extends Component{
     }
 
   render() {
+
+    let starList = [];
+    let {StarSubjectReducer} = this.props;
+    console.log('StarSubjectGrid---',StarSubjectReducer);
+    starList = StarSubjectReducer.starList;
     return (
       // ListView wraps ScrollView and so takes on its properties.
       // With that in mind you can use the ScrollView's contentContainerStyle prop to style the items.
       <View style={styles.container}>
         <ListView
           contentContainerStyle={styles.list}
-          dataSource={this.state.dataSource}
+          dataSource={this.state.dataSource.cloneWithRows(starList)}
           initialListSize={21}
           pageSize={3} // should be a multiple of the no. of visible cells per row
           scrollRenderAheadDistance={500}
@@ -93,7 +101,7 @@ export default class StarSubjectGrid extends Component{
           renderRow={this._renderRow}
           refreshControl={
             <RefreshControl
-                  refreshing={this.state.isRefreshing}
+                  refreshing={StarSubjectReducer.isRefreshing}
                   onRefresh={this._onRefresh}
                   title="正在加载中…"
                   color="#ccc"
@@ -107,9 +115,9 @@ export default class StarSubjectGrid extends Component{
   //下拉刷新
   _onRefresh = () => {
     console.log('下拉刷新')
-    InteractionManager.runAfterInteractions(() => {
-        this.getNetData();
-    });
+    // this.getNetData();
+    let {dispatch} = this.props;
+    dispatch(starSubjectAction(true,false));
   }
 
   _renderRow(rowData, sectionID, rowID) {

@@ -5,11 +5,11 @@
 import { combineReducers } from 'redux';
 
 import MainViewReducer from './MainViewReducer'
-import ChannelReducer from './ChannelReducer'
+import StarSubjectReducer from './StarSubjectReducer'
 import UserReducer from './UserReducer';
 
 export default rootReducer = combineReducers({
     MainViewReducer,
-    // ChannelReducer,
+    StarSubjectReducer,
     // UserReducer,
 })

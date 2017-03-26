@@ -5,26 +5,17 @@
 import * as types from '../actions/ActionType'
 
 const initialState = {
-    homeAdvPicsList: [],
-    feedList:[],
-    starList:[],
-    isRefreshing:false,
-    isLoading:true,
+    starList: [],
+    isLoading: true,
+    isRefreshing: false,
 }
 
-let MainViewReducer = (state = initialState, action) => {
+let StarSubjectReducer = (state = initialState, action) => {
+
     switch(action.type){
-        case types.FETCH_MAIN_LIST:
         case types.FETCH_STAR_LIST:
             return Object.assign({}, state, {
                 ...state,
-            })
-        case types.RECEIVE_MAIN_LIST:
-            return Object.assign({}, state, {
-                homeAdvPicsList: action.homeAdvPicsList,
-                feedList:action.feedList,
-                isRefreshing: action.isRefreshing,
-                isLoading:action.isLoading
             })
         case types.RECEIVE_STAR_LIST:
 
@@ -33,10 +24,9 @@ let MainViewReducer = (state = initialState, action) => {
                 isRefreshing: action.isRefreshing,
                 isLoading:action.isLoading
             })
-
         default:
             return state;
     }
 }
 
-export default MainViewReducer;
+export default StarSubjectReducer;
